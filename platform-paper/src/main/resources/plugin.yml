@@ -1,0 +1,8 @@
+name: Hurricane
+version: ${version}
+main: org.geysermc.hurricane.paper.HurricanePaper
+api-version: '1.20'
+folia-supported: true
+authors: [darkcupid412]
+description: Exact per-player Bedrock collision translation for Geyser on Paper
+softdepend: [Geyser-Spigot, floodgate]
