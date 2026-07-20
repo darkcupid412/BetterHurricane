@@ -22,7 +22,7 @@ final class BedrockCollisionMath {
         );
 
         float offsetX = quantizedOffset(random.nextLong(), minimum, maximum, steps);
-        random.nextLong(); // Skip the unused Y value.
+        random.nextLong(); // Bedrock draws X, Y, Z; the Y offset is consumed but not applied.
         float offsetZ = quantizedOffset(random.nextLong(), minimum, maximum, steps);
         return new Offset(offsetX, offsetZ);
     }
