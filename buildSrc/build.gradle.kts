@@ -15,4 +15,5 @@ dependencies {
     implementation(libs.architectury.plugin.library)
     implementation(libs.architectury.loom.plugin)
     implementation(libs.shadow.plugin)
+    implementation(libs.minotaur)
 }

@@ -5,6 +5,7 @@ import org.gradle.jvm.toolchain.JavaToolchainService
 plugins {
     `java-library`
     id("com.gradleup.shadow")
+    id("com.modrinth.minotaur")
 }
 
 val projectVersion = version.toString()
@@ -57,9 +58,21 @@ tasks.jar {
 }
 
 tasks.shadowJar {
-    archiveFileName.set("hurricane-paper-$projectVersion.jar")
+    archiveFileName.set("hurricane-paper.jar")
     archiveClassifier.set("")
     from(rootProject.file("LICENSE"))
+}
+
+modrinth {
+    token.set(System.getenv("MODRINTH_TOKEN"))
+    projectId.set("hurricane")
+    versionNumber.set("$projectVersion-${System.getenv("GITHUB_RUN_NUMBER") ?: "local"}")
+    versionType.set("release")
+    uploadFile.set(tasks.shadowJar)
+    loaders.addAll("paper", "folia")
+    // Paper support reaches back to 1.20.5; expand this list before release.
+    gameVersions.addAll("26.2")
+    failSilently.set(false)
 }
 
 tasks.build {

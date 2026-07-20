@@ -1,5 +1,6 @@
 plugins {
     id("com.gradleup.shadow")
+    id("com.modrinth.minotaur")
 }
 
 architectury {
@@ -59,9 +60,20 @@ tasks.jar {
 
 tasks.shadowJar {
     configurations = listOf(project.configurations.getByName("shadow"))
-    archiveFileName.set("hurricane-fabric-$projectVersion.jar")
+    archiveFileName.set("hurricane-fabric.jar")
     archiveClassifier.set("")
     from(rootProject.file("LICENSE"))
+}
+
+modrinth {
+    token.set(System.getenv("MODRINTH_TOKEN"))
+    projectId.set("hurricane")
+    versionNumber.set("$projectVersion-${System.getenv("GITHUB_RUN_NUMBER") ?: "local"}")
+    versionType.set("release")
+    uploadFile.set(tasks.shadowJar)
+    loaders.addAll("fabric")
+    gameVersions.addAll("26.2")
+    failSilently.set(false)
 }
 
 tasks.build {
